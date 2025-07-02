@@ -1,0 +1,105 @@
+{
+  "transportation": {
+    "car": {
+      "petrol": 0.404,
+      "diesel": 0.448,
+      "hybrid": 0.253,
+      "electric": 0.089
+    },
+    "motorcycle": {
+      "petrol": 0.103
+    },
+    "public_transport": {
+      "bus": 0.089,
+      "train": 0.041,
+      "subway": 0.038,
+      "tram": 0.029
+    },
+    "flight": {
+      "domestic_short": 0.255,
+      "domestic_long": 0.195,
+      "international": 0.15
+    },
+    "other": {
+      "walking": 0.0,
+      "cycling": 0.0,
+      "scooter": 0.02
+    }
+  },
+  "energy": {
+    "electricity": {
+      "grid_average": 0.457,
+      "renewable": 0.024,
+      "coal": 0.82,
+      "natural_gas": 0.35
+    },
+    "heating": {
+      "natural_gas": 0.185,
+      "heating_oil": 0.245,
+      "propane": 0.214,
+      "electric": 0.457
+    },
+    "cooling": {
+      "electric": 0.457
+    }
+  },
+  "food": {
+    "meat": {
+      "beef": 27.0,
+      "lamb": 24.5,
+      "pork": 7.6,
+      "chicken": 9.9,
+      "turkey": 12.1
+    },
+    "dairy": {
+      "milk": 3.2,
+      "cheese": 13.5,
+      "yogurt": 2.2,
+      "butter": 23.8
+    },
+    "seafood": {
+      "fish_farmed": 13.6,
+      "fish_wild": 5.4,
+      "shellfish": 11.3
+    },
+    "plant_based": {
+      "vegetables": 2.0,
+      "fruits": 1.1,
+      "grains": 2.5,
+      "legumes": 0.9,
+      "nuts": 2.3
+    },
+    "processed": {
+      "bread": 0.9,
+      "pasta": 1.4,
+      "rice": 2.7,
+      "coffee": 28.5,
+      "tea": 6.3
+    }
+  },
+  "consumption": {
+    "clothing": {
+      "cotton_shirt": 8.0,
+      "jeans": 33.4,
+      "shoes": 12.5,
+      "synthetic_garment": 5.5
+    },
+    "electronics": {
+      "smartphone": 70.0,
+      "laptop": 300.0,
+      "tablet": 130.0,
+      "tv": 500.0
+    },
+    "household": {
+      "furniture_item": 150.0,
+      "appliance_small": 45.0,
+      "appliance_large": 200.0
+    }
+  },
+  "waste": {
+    "landfill": 0.57,
+    "recycling": 0.21,
+    "composting": 0.05,
+    "incineration": 0.35
+  }
+}
