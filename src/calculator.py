@@ -4,11 +4,11 @@ Carbon Footprint Calculator Engine
 This module handles all emission factor calculations and conversions
 from activities to CO2 equivalent emissions.
 """
-
 import json
 from typing import Dict, Union, Optional
 from dataclasses import dataclass
 from pathlib import Path
+from src.geo_utils import get_flight_distance_km
 
 
 @dataclass
@@ -153,13 +153,14 @@ class CarbonCalculator:
         with open(path, 'w') as f:
             json.dump(factors, f, indent=2)
     
-    def calculate_transportation(self, transport_type: str, fuel_type: str, 
-                               distance_km: float, passengers: int = 1) -> EmissionResult:
+    def calculate_transportation(
+        self, transport_type: str, fuel_type: str,
+        distance_km: float, passengers: int = 1,
+    ) -> EmissionResult:
         """Calculate emissions from transportation"""
         try:
             factor = self.emission_factors["transportation"][transport_type][fuel_type]
-            co2_kg = (factor * distance_km) / passengers
-            
+            co2_kg = (factor * distance_km) / passengers         
             return EmissionResult(
                 co2_kg=round(co2_kg, 3),
                 category="transportation",
@@ -245,7 +246,7 @@ class CarbonCalculator:
         try:
             factor = self.emission_factors["consumption"][item_type][item]
             
-            # If lifetime is provided, amortize emissions over the lifetime
+            # If lifetime is provided, amortise emissions over the lifetime
             if lifetime_years:
                 factor /= lifetime_years
             
@@ -288,25 +289,11 @@ class CarbonCalculator:
     def get_category_factors(self, category: str) -> Dict:
         """Get all emission factors for a specific category"""
         return self.emission_factors.get(category, {})
-    
+        
     def estimate_flight_distance(self, origin: str, destination: str) -> float:
-        """
-        Estimate flight distance between cities (simplified version)
-        In a real implementation, you'd use a proper distance API
-        """
-        # This is a simplified lookup - in practice, use a proper API
-        city_distances = {
-            ("NYC", "LAX"): 3944,
-            ("NYC", "LON"): 5585,
-            ("LAX", "LON"): 8780,
-            ("NYC", "MIA"): 1759,
-            ("LAX", "SFO"): 559,
-        }
-        
-        key = (origin.upper(), destination.upper())
-        reverse_key = (destination.upper(), origin.upper())
-        
-        return city_distances.get(key, city_distances.get(reverse_key, 1000))
+        return get_flight_distance_km(origin, destination)
+            
+
 
 
 # Example usage and testing functions

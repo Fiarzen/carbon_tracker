@@ -2,10 +2,19 @@
 Unit tests for CarbonCalculator using pytest
 
 """
-
 import pytest
 from src.calculator import CarbonCalculator, EmissionResult
+from unittest.mock import patch, MagicMock
 
+@patch("src.calculator.get_flight_distance_km")
+def test_estimate_flight_distance(mock_distance_func):
+    mock_distance_func.return_value = 1200.0
+
+    calc = CarbonCalculator()
+    distance = calc.estimate_flight_distance("Berlin", "Madrid")
+
+    assert distance == 1200.0
+    mock_distance_func.assert_called_once_with("Berlin", "Madrid")
 
 @pytest.fixture(scope="module")
 def calculator():

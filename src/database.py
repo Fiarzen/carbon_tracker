@@ -5,14 +5,25 @@ This module handles interaction with the PostgreSQL database using SQLAlchemy OR
 It stores emission calculation results for tracking and analysis.
 """
 
-from sqlalchemy import create_engine, Column, Integer, Float, String, JSON, DateTime
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import create_engine, Column, Integer, Float, String, JSON, DateTime, text
+from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import sessionmaker
+
 from datetime import datetime
 import os
+from dotenv import load_dotenv
 
-# Load environment variable or fallback to local default
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://username:password@localhost:5432/carbon_tracker")
+load_dotenv()
+
+PG_USER = os.getenv("PG_USER")
+PG_PASSWORD = os.getenv("PG_PASSWORD")
+PG_HOST = os.getenv("PG_HOST")
+PG_PORT = os.getenv("PG_PORT")
+PG_DATABASE = os.getenv("PG_DATABASE")
+
+DATABASE_URL = (
+    f"postgresql://{PG_USER}:{PG_PASSWORD}@{PG_HOST}:{PG_PORT}/{PG_DATABASE}"
+)
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(bind=engine)
@@ -59,3 +70,11 @@ def insert_emission_result(result):
         raise e
     finally:
         session.close()
+
+if __name__ == "__main__":
+    try:
+        with engine.connect() as conn:
+            result = conn.execute(text("SELECT 1"))  # wrap query in text()
+            print("✅ Connected to database:", result.scalar())
+    except Exception as e:
+        print("❌ Database connection failed:", e)
