@@ -1,6 +1,6 @@
 # 🌍 Carbon Tracker Application
 
-A Python-based carbon footprint tracking tool that allows users to calculate and monitor their CO₂ emissions across key areas of daily life.
+A Python-based carbon footprint tracking tool that allows users to calculate and monitor their CO₂ emissions across key areas of daily life. (WIP)
 
 ---
 
@@ -18,7 +18,7 @@ It uses emission factors from trusted sources like EPA and DEFRA, and can be ext
 
 ---
 
-## 🧠 Features
+## Planned Features
 
 ### ✅ Emission Categories
 
@@ -81,13 +81,3 @@ geopy (if estimating distance manually)
 
 pytest
 
-📌 To Do / Planned
- Frontend integration (web or desktop UI)
-
- User accounts and tracking over time
-
- API endpoint for external tools
-
- Visualisation (e.g. charts, graphs)
-
- Internationalisation
