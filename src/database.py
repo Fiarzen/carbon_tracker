@@ -6,16 +6,26 @@ It stores emission calculation results for tracking and analysis.
 """
 
 from sqlalchemy import create_engine, Column, Integer, Float, String, JSON, DateTime, text
-from sqlalchemy.orm import declarative_base
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from datetime import datetime
 import os
 from dotenv import load_dotenv
+from sqlalchemy import create_engine
+from dotenv import load_dotenv
+from models import EmissionResult
+from db_base import Base
 
 load_dotenv()
 
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+engine = create_engine(DATABASE_URL)
+SessionLocal = sessionmaker(bind=engine)
+
+Base = declarative_base()
 PG_USER = os.getenv("PG_USER")
 PG_PASSWORD = os.getenv("PG_PASSWORD")
 PG_HOST = os.getenv("PG_HOST")
@@ -104,7 +114,32 @@ def create_database_if_not_exists():
         print(f"Database '{PG_DATABASE}' already exists.")
 
     cursor.close()
-    conn.close()  
+    conn.close() 
+
+def create_tables():
+    from models import EmissionResult  # delay import to avoid circular import
+    Base.metadata.create_all(bind=engine)
+
+def save_emission_result(result):
+    from models import EmissionResult  # also import here
+    session = SessionLocal()
+    try:
+        db_result = EmissionResult(
+            category=result.category,
+            subcategory=result.subcategory,
+            activity=result.activity,
+            co2_kg=result.co2_kg,
+            details=result.details,
+        )
+        session.add(db_result)
+        session.commit()
+        session.refresh(db_result)
+        return db_result.id
+    except Exception as e:
+        session.rollback()
+        raise e
+    finally:
+        session.close()
 
 if __name__ == "__main__":
     try:
