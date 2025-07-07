@@ -40,9 +40,9 @@ engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(bind=engine)
 Base = declarative_base()
 
-class EmissionRecord(Base):
-    """SQLAlchemy model for an emission record"""
-    __tablename__ = "emission_records"
+class EmissionResult(Base):
+    """SQLAlchemy model for an emission result"""
+    __tablename__ = "emission_results"
 
     id = Column(Integer, primary_key=True, index=True)
     timestamp = Column(DateTime, default=datetime.utcnow)
@@ -67,7 +67,7 @@ def insert_emission_result(result):
 
     session = SessionLocal()
     try:
-        record = EmissionRecord(
+        record = EmissionResult(
             category=result.category,
             subcategory=result.subcategory,
             activity=result.activity,
@@ -102,7 +102,6 @@ def create_database_if_not_exists():
 
     cursor = conn.cursor()
 
-    # Check if database exists
     cursor.execute("SELECT 1 FROM pg_database WHERE datname=%s", (PG_DATABASE,))
     exists = cursor.fetchone()
 
@@ -117,11 +116,9 @@ def create_database_if_not_exists():
     conn.close() 
 
 def create_tables():
-    from models import EmissionResult  # delay import to avoid circular import
     Base.metadata.create_all(bind=engine)
 
-def save_emission_result(result):
-    from models import EmissionResult  # also import here
+def save_emission_result(result):  # also import here
     session = SessionLocal()
     try:
         db_result = EmissionResult(
