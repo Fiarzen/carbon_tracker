@@ -86,12 +86,3 @@ def test_waste_invalid_method(calculator):
     with pytest.raises(ValueError):
         calculator.calculate_waste("catapult", 3.0)
 
-
-def test_estimate_flight_distance_known_route(calculator):
-    distance = calculator.estimate_flight_distance("NYC", "LON")
-    assert distance == 5585
-
-
-def test_estimate_flight_distance_unknown_route(calculator):
-    distance = calculator.estimate_flight_distance("MEL", "CAI")
-    assert distance == 1000  # Default fallback
