@@ -5,7 +5,7 @@ This module handles interaction with the PostgreSQL database using SQLAlchemy OR
 It stores emission calculation results for tracking and analysis.
 """
 
-from sqlalchemy import create_engine, Column, Integer, Float, String, JSON, DateTime, text
+from sqlalchemy import create_engine, Column, Integer, Float, String, JSON, DateTime, text, func
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import psycopg2
@@ -15,7 +15,7 @@ import os
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from dotenv import load_dotenv
-from src.models import EmissionResult
+from src.models import DBResult
 from src.db_base import Base
 
 load_dotenv()
@@ -46,11 +46,12 @@ class EmissionResult(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     timestamp = Column(DateTime, default=datetime.utcnow)
-    category = Column(String, nullable=False)
-    subcategory = Column(String, nullable=False)
-    activity = Column(String, nullable=False)
+    category = Column(String, nullable=True)
+    subcategory = Column(String, nullable=True)
+    activity = Column(String, nullable=True)
     co2_kg = Column(Float, nullable=False)
     details = Column(JSON, nullable=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
 
 def init_db():
     """Create all tables in the database"""
@@ -58,12 +59,11 @@ def init_db():
 
 def insert_emission_result(result):
     """
-    Insert an EmissionResult instance (from calculator.py) into the database
+    Insert a DBResult instance (from calculator.py) into the database
     """
-    from calculator import EmissionResult  # Avoid circular import unless restructuring
 
-    if not isinstance(result, EmissionResult):
-        raise TypeError("Expected an EmissionResult instance")
+    if not isinstance(result, DBResult):
+        raise TypeError("Expected a DBResult instance")
 
     session = SessionLocal()
     try:

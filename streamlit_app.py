@@ -1,7 +1,7 @@
 import streamlit as st
 from src.calculator import CarbonCalculator
 from src.database import create_database_if_not_exists, SessionLocal
-from src.models import EmissionResult as DBResult
+from src.models import DBResult
 from src.database import engine, Base
 
 # Initialize DB and calculator
@@ -20,7 +20,6 @@ def save_to_db(result):
     with SessionLocal() as session:
         db_result = DBResult(
             activity=result.activity,
-            # origin="N/A", destination="N/A",
             co2_kg=result.co2_kg
         )
         session.add(db_result)

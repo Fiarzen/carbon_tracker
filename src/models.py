@@ -3,7 +3,7 @@ from sqlalchemy import Column, Integer, String, Float, JSON, DateTime, func
 from datetime import datetime
 from src.db_base import Base
 
-class EmissionResult(Base):
+class DBResult(Base):
     __tablename__ = "emission_results"
 
     id = Column(Integer, primary_key=True, index=True)
