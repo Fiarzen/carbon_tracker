@@ -1,7 +1,7 @@
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, Float, JSON, DateTime, func
 from datetime import datetime
-from db_base import Base
+from src.db_base import Base
 
 class EmissionResult(Base):
     __tablename__ = "emission_results"

@@ -15,8 +15,8 @@ import os
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from dotenv import load_dotenv
-from models import EmissionResult
-from db_base import Base
+from src.models import EmissionResult
+from src.db_base import Base
 
 load_dotenv()
 
