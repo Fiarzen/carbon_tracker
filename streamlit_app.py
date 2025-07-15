@@ -1,5 +1,5 @@
 import streamlit as st
-from carbon_tracker.calculator import CarbonCalculator
+from calculator import CarbonCalculator
 
 # Initialize calculator
 calc = CarbonCalculator()
