@@ -3,7 +3,7 @@ Unit tests for CarbonCalculator using pytest
 
 """
 import pytest
-from carbon_tracker.calculator import CarbonCalculator, EmissionResult
+from carbon_tracker.src.calculator import CarbonCalculator, EmissionResult
 from unittest.mock import patch, MagicMock
 
 @patch("src.calculator.get_flight_distance_km")

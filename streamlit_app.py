@@ -1,5 +1,5 @@
 import streamlit as st
-from calculator import CarbonCalculator
+from src.calculator import CarbonCalculator
 
 # Initialize calculator
 calc = CarbonCalculator()
