@@ -39,7 +39,7 @@ elif activity_type == "Energy":
         st.json(result.details)
 
 elif activity_type == "Food":
-    st.header("🥩 Food")
+    st.header("🫘🍅🫑 Food")
     food_type = st.selectbox("Category", list(calc.get_category_factors("food").keys()))
     food_item = st.selectbox("Item", list(calc.get_category_factors("food")[food_type].keys()))
     amount = st.number_input("Amount", min_value=0.0)
