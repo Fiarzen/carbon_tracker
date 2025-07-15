@@ -1,5 +1,4 @@
 openrouteservice==2.3.0
-streamlit==1.0.0
 geopy==1.22.0
 rich==13.7.1
 protobuf==3.20.3
