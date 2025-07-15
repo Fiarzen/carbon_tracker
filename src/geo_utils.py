@@ -16,4 +16,4 @@ def get_flight_distance_km(origin: str, destination: str) -> float:
     coords = [geocode_city(origin), geocode_city(destination)]
     response = client.directions(coords, profile='driving-car', format='geojson')
     distance_m = response["features"][0]["properties"]["segments"][0]["distance"]
-    return distance_m / 1000  
+    return distance_m / 1000 
